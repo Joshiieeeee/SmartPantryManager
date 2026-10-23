@@ -1,0 +1,16 @@
+# Actual test results (complete after running)
+- [ ] App opens on emulator/physical device
+- [ ] Add, view, edit and delete ingredients
+- [ ] Ingredients persist after force-close/relaunch
+- [ ] Twenty recipes exist
+- [ ] Recipe with one missing ingredient is excluded
+- [ ] Recipe with insufficient quantity is excluded
+- [ ] Recipe appears when all quantities are sufficient
+- [ ] Simple singular/plural names work
+- [ ] Unit conversion within compatible groups works
+- [ ] Empty pantry shows helpful message
+- [ ] Form rejects invalid inputs
+- [ ] Navigation and details screens function
+- [ ] Settings preference persists
+- [ ] Screenshots captured from the running app
+- [ ] Video recorded with narration and GitHub history
