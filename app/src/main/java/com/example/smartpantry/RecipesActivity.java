@@ -37,8 +37,8 @@ public class RecipesActivity extends BaseActivity {
             count++;
             View row = getLayoutInflater().inflate(R.layout.row_item, list, false);
             ((TextView) row.findViewById(R.id.rowTitle)).setText(recipe.name);
-            ((TextView) row.findViewById(R.id.rowSubtitle)).setText(
-                    recipe.ingredients.size() + " ingredients • Ready to make");
+            row.findViewById(R.id.rowSubtitle).setVisibility(View.GONE);
+            row.setContentDescription(recipe.name);
             row.setOnClickListener(view -> {
                 Intent intent = new Intent(this, RecipeDetailActivity.class);
                 intent.putExtra("id", recipe.id);
