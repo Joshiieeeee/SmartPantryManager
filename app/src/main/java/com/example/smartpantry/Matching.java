@@ -1,7 +1,9 @@
 package com.example.smartpantry;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Matching {
     private static String normal(String name) {
@@ -36,16 +38,29 @@ public class Matching {
         return value;
     }
 
+    private static void addQuantity(Map<String, Double> quantities, String key, double amount) {
+        Double current = quantities.get(key);
+        quantities.put(key, (current == null ? 0 : current) + amount);
+    }
+
     public static boolean canMake(Recipe recipe, List<Ingredient> pantry) {
+        Map<String, Double> available = new HashMap<>();
+        for (Ingredient item : pantry) {
+            String key = normal(item.name) + "|" + category(item.unit);
+            addQuantity(available, key, base(item.quantity, item.unit));
+        }
+
+        Map<String, Double> required = new HashMap<>();
         for (Recipe.Requirement needed : recipe.ingredients) {
-            double available = 0;
-            for (Ingredient item : pantry) {
-                if (normal(item.name).equals(normal(needed.name))
-                        && category(item.unit).equals(category(needed.unit))) {
-                    available += base(item.quantity, item.unit);
-                }
+            String key = normal(needed.name) + "|" + category(needed.unit);
+            addQuantity(required, key, base(needed.quantity, needed.unit));
+        }
+
+        for (Map.Entry<String, Double> entry : required.entrySet()) {
+            Double amount = available.get(entry.getKey());
+            if ((amount == null ? 0 : amount) + 0.000001 < entry.getValue()) {
+                return false;
             }
-            if (available + 0.000001 < base(needed.quantity, needed.unit)) return false;
         }
         return true;
     }
