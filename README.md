@@ -23,7 +23,7 @@ SQLiteOpenHelper was chosen because SQLite works offline and is covered in Chapt
 - Use `tomatoes` for `tomato` or 1 kg for 1000 g to check basic normalization.
 
 ## Limitations
-Units are supported only within compatible groups (pieces, mass, volume). Different ingredient forms (e.g. raw/dried) aren't converted. Expiry preference is saved but does not schedule a notification. Pantry list uses a ListView with a custom BaseAdapter.
+Units are supported only within compatible groups (pieces, mass, volume). Different ingredient forms (e.g. raw/dried) aren't converted. The expiry setting labels pantry items as Soon or Expired, but does not send phone notifications. Pantry list uses a ListView with a custom BaseAdapter.
 
 ## Project repository
 https://github.com/Joshiieeeee/SmartPantryManager

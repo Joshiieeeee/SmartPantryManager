@@ -12,5 +12,6 @@
 - [ ] Form rejects invalid inputs
 - [ ] Navigation and details screens function
 - [ ] Settings preference persists
+- [ ] Expiry setting changes pantry status labels for near and past dates
 - [ ] Screenshots captured from the running app
 - [ ] Video recorded with narration and GitHub history
