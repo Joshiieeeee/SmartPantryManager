@@ -25,5 +25,5 @@ SQLiteOpenHelper was chosen because SQLite works offline and is covered in Chapt
 ## Limitations
 Units are supported only within compatible groups (pieces, mass, volume). Different ingredient forms (e.g. raw/dried) aren't converted. Expiry preference is saved but does not schedule a notification. Pantry list uses a ListView with a custom BaseAdapter.
 
-## GitHub and assessment
-Create and push your own public GitHub repository. Commit as you genuinely work through changes (10+ meaningful commits over time). Add its real URL to the final report. Capture real screenshots from your running build and record the required narrated 5–7 minute demonstration. Never claim the project has been compiled, tested or demonstrated until you have verified it.
+## Project repository
+https://github.com/Joshiieeeee/SmartPantryManager
