@@ -114,22 +114,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         for (Recipe recipe : data) {
-            try (Cursor cursor = db.rawQuery(
-                    "SELECT name,quantity,unit FROM recipe_ingredients WHERE recipe_id=?",
-                    new String[]{String.valueOf(recipe.id)})) {
-                while (cursor.moveToNext()) {
-                    recipe.ingredients.add(new Recipe.Requirement(
-                            cursor.getString(0), cursor.getDouble(1), cursor.getString(2)));
-                }
-            }
+            loadRequirements(db, recipe);
         }
         return data;
     }
 
     public Recipe getRecipe(long id) {
-        for (Recipe recipe : allRecipes()) {
-            if (recipe.id == id) return recipe;
+        SQLiteDatabase db = getReadableDatabase();
+        Recipe recipe;
+        try (Cursor cursor = db.rawQuery(
+                "SELECT id,name,method FROM recipes WHERE id=?",
+                new String[]{String.valueOf(id)})) {
+            if (!cursor.moveToFirst()) return null;
+            recipe = new Recipe(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
         }
-        return null;
+        loadRequirements(db, recipe);
+        return recipe;
+    }
+
+    private void loadRequirements(SQLiteDatabase db, Recipe recipe) {
+        try (Cursor cursor = db.rawQuery(
+                "SELECT name,quantity,unit FROM recipe_ingredients WHERE recipe_id=?",
+                new String[]{String.valueOf(recipe.id)})) {
+            while (cursor.moveToNext()) {
+                recipe.ingredients.add(new Recipe.Requirement(
+                        cursor.getString(0), cursor.getDouble(1), cursor.getString(2)));
+            }
+        }
     }
 }
