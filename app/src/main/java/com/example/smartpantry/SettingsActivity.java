@@ -1,9 +1,24 @@
 package com.example.smartpantry;
-import android.content.*;import android.os.Bundle;import android.widget.*;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.Switch;
+import android.widget.TextView;
+
 public class SettingsActivity extends BaseActivity {
- @Override public void onCreate(Bundle b){super.onCreate(b);setContentView(R.layout.activity_settings);nav();
-  Switch alert=findViewById(R.id.alertSwitch);android.content.SharedPreferences prefs=getSharedPreferences("options",MODE_PRIVATE);
-  alert.setChecked(prefs.getBoolean("expiry_alert",false));alert.setOnCheckedChangeListener((v,checked)->prefs.edit().putBoolean("expiry_alert",checked).apply());
-  ((TextView)findViewById(R.id.settingsNote)).setText("Expiry alert preference is saved locally. Automated notifications are not included in this version.");
- }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        nav();
+
+        Switch alert = findViewById(R.id.alertSwitch);
+        SharedPreferences preferences = getSharedPreferences("options", MODE_PRIVATE);
+        alert.setChecked(preferences.getBoolean("expiry_alert", false));
+        alert.setOnCheckedChangeListener((view, checked) ->
+                preferences.edit().putBoolean("expiry_alert", checked).apply());
+
+        TextView note = findViewById(R.id.settingsNote);
+        note.setText("Expiry alert preference is saved locally. Automated notifications are not included in this version.");
+    }
 }
