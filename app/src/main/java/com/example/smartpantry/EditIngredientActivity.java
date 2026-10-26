@@ -1,6 +1,8 @@
 package com.example.smartpantry;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class EditIngredientActivity extends BaseActivity {
@@ -29,6 +32,8 @@ public class EditIngredientActivity extends BaseActivity {
         name = findViewById(R.id.inputName);
         quantity = findViewById(R.id.inputQuantity);
         expiry = findViewById(R.id.inputExpiry);
+        expiry.setFocusable(false);
+        expiry.setOnClickListener(view -> chooseExpiry());
         units = findViewById(R.id.inputUnit);
 
         String[] options = {"pieces", "g", "kg", "ml", "l", "tbsp", "tsp"};
@@ -69,6 +74,29 @@ public class EditIngredientActivity extends BaseActivity {
                     finish();
                 })
                 .show());
+    }
+
+    private void chooseExpiry() {
+        Calendar selected = Calendar.getInstance();
+        String current = expiry.getText().toString();
+        if (!current.isEmpty()) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                format.setLenient(false);
+                selected.setTime(format.parse(current));
+            } catch (Exception ignored) {
+                // Keep today's date if an older saved value cannot be parsed.
+            }
+        }
+
+        DatePickerDialog picker = new DatePickerDialog(this,
+                (view, year, month, day) -> expiry.setText(
+                        String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, day)),
+                selected.get(Calendar.YEAR), selected.get(Calendar.MONTH),
+                selected.get(Calendar.DAY_OF_MONTH));
+        picker.setButton(DialogInterface.BUTTON_NEUTRAL, "Clear",
+                (dialog, which) -> expiry.setText(""));
+        picker.show();
     }
 
     private void save() {
