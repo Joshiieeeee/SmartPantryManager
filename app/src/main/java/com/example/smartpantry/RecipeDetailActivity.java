@@ -12,7 +12,13 @@ public class RecipeDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
         nav();
 
-        Recipe recipe = new DatabaseHelper(this).getRecipe(getIntent().getLongExtra("id", -1));
+        DatabaseHelper db = new DatabaseHelper(this);
+        Recipe recipe;
+        try {
+            recipe = db.getRecipe(getIntent().getLongExtra("id", -1));
+        } finally {
+            db.close();
+        }
         if (recipe == null) {
             finish();
             return;

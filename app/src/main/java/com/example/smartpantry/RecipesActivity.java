@@ -50,4 +50,10 @@ public class RecipesActivity extends BaseActivity {
         TextView noRecipes = findViewById(R.id.noRecipes);
         noRecipes.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
     }
+
+    @Override
+    protected void onDestroy() {
+        if (db != null) db.close();
+        super.onDestroy();
+    }
 }

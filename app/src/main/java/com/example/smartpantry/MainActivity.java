@@ -42,4 +42,10 @@ public class MainActivity extends BaseActivity {
         });
         list.setAdapter(adapter);
     }
+
+    @Override
+    protected void onDestroy() {
+        if (db != null) db.close();
+        super.onDestroy();
+    }
 }

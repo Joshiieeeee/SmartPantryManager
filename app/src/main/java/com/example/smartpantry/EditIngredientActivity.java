@@ -138,4 +138,10 @@ public class EditIngredientActivity extends BaseActivity {
         db.saveIngredient(id, ingredientName, amount, units.getSelectedItem().toString(), date);
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        if (db != null) db.close();
+        super.onDestroy();
+    }
 }
