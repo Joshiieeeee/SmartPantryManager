@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 
 public class PantryAdapter extends BaseAdapter {
     public interface Click {
@@ -48,11 +48,13 @@ public class PantryAdapter extends BaseAdapter {
         Ingredient item = items.get(index);
         ((TextView) view.findViewById(R.id.rowTitle)).setText(item.name);
 
-        String description = String.format(Locale.getDefault(), "%s %s", item.quantity, item.unit);
+        String description = BigDecimal.valueOf(item.quantity).stripTrailingZeros().toPlainString()
+                + " " + item.unit;
         if (item.expiry != null && !item.expiry.trim().isEmpty()) {
-            description += " • expires " + item.expiry;
+            description += " · " + item.expiry;
         }
         ((TextView) view.findViewById(R.id.rowSubtitle)).setText(description);
+        view.setContentDescription(item.name + ", " + description);
         view.setOnClickListener(clicked -> click.selected(item));
         return view;
     }
